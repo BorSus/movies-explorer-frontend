@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 import '../../index.css';
 // import components
@@ -12,29 +12,46 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import SavedMovies from '../SavedMovies/SavedMovies';
+import MobileNavigation from '../MobileNavigation/MobileNavigation';
+import ErrorServer from '../ErrorServer/ErrorServer';
 function App() {
   const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isMobileMenuActive, setIsMobileMenuActive] = useState(false);
+  const [isErrorServerOpen, setErrorServerOpen] = useState(false);
   const wrapRoutes =
     location.pathname === '/' ||
     location.pathname === '/movies' ||
     location.pathname === '/saved-movies';
+  function handleMobileMenuClick() {
+    setIsMobileMenuActive(!isMobileMenuActive);
+  }
+
   function handleExiteClick() {
-    console.log('Вы вышли из аккаунта');
     setIsLoggedIn(false);
   }
   function handleEnterClick() {
-    console.log('Вы авторизованы');
     setIsLoggedIn(true);
+  }
+  function handleSearchClick() {
+    setErrorServerOpen(true);
+  }
+  function handleCloseErrorServer() {
+    setErrorServerOpen(false);
   }
   return (
     <>
-      {(wrapRoutes || location.pathname === '/profile') && <Header isLoggedIn={isLoggedIn} />}
+      {(wrapRoutes || location.pathname === '/profile') && (
+        <Header isLoggedIn={isLoggedIn} handleMobileMenuClick={handleMobileMenuClick} />
+      )}
 
       <Routes>
         <Route path='/' element={<Main />} />
-        <Route path='/movies' element={<Movies />} />
-        <Route path='/saved-movies' element={<SavedMovies />} />
+        <Route path='/movies' element={<Movies handleSearchClick={handleSearchClick} />} />
+        <Route
+          path='/saved-movies'
+          element={<SavedMovies handleSearchClick={handleSearchClick} />}
+        />
         <Route
           path='/profile'
           element={
@@ -49,6 +66,15 @@ function App() {
         <Route path='*' element={<PageNotFound code='404' info='Страница не найдена' />} />
       </Routes>
       {wrapRoutes && <Footer />}
+      <MobileNavigation
+        isMobileMenuActive={isMobileMenuActive}
+        onCloseClick={handleMobileMenuClick}
+      />
+      <ErrorServer
+        message='Сервер временно не доступен'
+        isErrorServerOpen={isErrorServerOpen}
+        handleCloseErrorServer={handleCloseErrorServer}
+      />
     </>
   );
 }

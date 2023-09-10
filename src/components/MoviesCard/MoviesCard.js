@@ -18,7 +18,7 @@ function MoviesCard({ card }) {
             onClick={handlerOnClickSave}
           ></button>
         ) : (
-          <img src={delImg} className='moviesCard__delete' />
+          <img src={delImg} alt='иконка удалить' className='moviesCard__delete' />
         )}
       </div>
       <p className='moviesCard__duration'>{card.duration}</p>

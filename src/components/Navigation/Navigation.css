@@ -41,68 +41,12 @@
   letter-spacing: 0px;
   text-align: center;
 }
-.navigation__mobile-icon {
-  cursor: pointer;
-  box-sizing: border-box;
-  display: none;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  width: 22px;
-  height: 22px;
-  transition: opacity 0.2s linear;
-}
-.navigation__mobile-icon:hover {
-  opacity: 0.6;
-}
-.navigation__mobile-icon span {
-  position: absolute;
-  background-color: white;
-  width: 100%;
-  height: 3px;
-  top: 10px;
-  transition: all 0.5s ease 0.1s;
-}
 
-.navigation__mobile-icon::before,
-.navigation__mobile-icon::after {
-  content: '';
-  background-color: white;
-  position: absolute;
-  width: 100%;
-  height: 3px;
-  left: 0;
-  transition: all 0.5s ease 0.1s;
-}
-.navigation__mobile-icon:before {
-  top: 0px;
-}
-.navigation__mobile-icon:after {
-  bottom: 0px;
-}
-
-.navigation__mobile-icon.active::before {
-  transform: rotate(45deg);
-  top: 10px;
-}
-.navigation__mobile-icon.active::after {
-  transform: rotate(-45deg);
-  top: 10px;
-}
-
-.navigation__mobile-icon.active span {
-  transform: scale(0);
-}
 @media (max-width: 768px) {
   .navigation {
     display: none;
   }
   .navigation__profile {
     display: none;
-  }
-}
-@media (max-width: 768px) {
-  .navigation__mobile-icon {
-    display: flex;
   }
 }

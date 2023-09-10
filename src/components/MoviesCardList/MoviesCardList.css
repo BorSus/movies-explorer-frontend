@@ -24,3 +24,18 @@
   text-align: center;
   cursor: pointer;
 }
+@media (max-width: 768px) {
+  .moviesCardList {
+    column-gap: 30px;
+    row-gap: 36px;
+    padding: 70px 0px 30px;
+    grid-template-columns: repeat(auto-fill, minmax(339px, 1fr));
+  }
+}
+@media (max-width: 525px) {
+  .moviesCardList {
+    padding: 40px 10px 10px;
+    row-gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}

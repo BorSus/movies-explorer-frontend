@@ -23,8 +23,23 @@
 .movies__button:hover {
   opacity: 0.8;
 }
+.movies__not-found {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+  text-align: center;
+}
 @media (max-width: 768px) {
   .movies {
     padding: 0px 30px;
+  }
+}
+@media (max-width: 525px) {
+  .movies {
+    padding: 0px 0px;
+  }
+  .movies__button {
+    margin: 70px auto 80px;
   }
 }

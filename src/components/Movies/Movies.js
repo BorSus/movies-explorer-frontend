@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import Preloader from '../Preloader/Preloader';
 import { testCards } from '../../utils/constants.js';
-function Movies({}) {
+
+function Movies({ handleSearchClick }) {
+  const [isLoading, setIsLoading] = useState(false);
+  function handleMoreClick() {
+    setIsLoading(!isLoading);
+  }
+  const isNullSearch = testCards.length > 0;
   return (
     <section className='movies'>
-      <SearchForm />
-      <MoviesCardList cards={testCards} />
-      <button className='movies__button'>Ещё</button>
+      <SearchForm handleSearchClick={handleSearchClick} />
+      {isNullSearch ? (
+        <MoviesCardList cards={testCards} />
+      ) : (
+        <p className='movies__not-found'>По вашему запросу ничего не найдено</p>
+      )}
+
+      {isLoading && <Preloader />}
+
+      <button className='movies__button' onClick={handleMoreClick}>
+        Ещё
+      </button>
     </section>
   );
 }

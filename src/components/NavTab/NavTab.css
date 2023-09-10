@@ -1,6 +1,8 @@
 .navtab {
   box-sizing: border-box;
   display: flex;
+  margin: 0px;
+  padding: 0px;
   align-items: center;
   justify-content: center;
   background-color: #f5f5f5;
@@ -11,9 +13,19 @@
 .navtab__link {
   font-size: 13px;
   font-weight: 500;
+  line-height: 16;
   color: black;
   transition: opacity 0.2s linear;
 }
 .navtab__link:hover {
   opacity: 0.8;
+}
+@media (max-width: 525px) {
+  .navtab {
+    column-gap: 24px;
+  }
+  .navtab__link {
+    font-size: 11px;
+    column-gap: 16px;
+  }
 }

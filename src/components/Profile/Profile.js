@@ -1,52 +1,53 @@
 import React, { useState } from 'react';
 import EditeInput from '../EditeInput/EditeInput';
-
+import SubmitButton from '../SubmitButton/SubmitButton';
+import { useNavigate } from 'react-router-dom';
 function Profile({ user, onExiteClick }) {
-  //переменная состояния = Статус активности редактирования
+  const navigate = useNavigate();
   const [isEditeActive, setIsEditeActive] = useState(false);
-  const [isFailEdite, setFailEdite] = useState(false);
-  //Функция активации редактирования профиля
   function handleEditControlClick() {
     setIsEditeActive(true);
   }
-  // Сохранить изменения профиля
   function handleSubmit(e) {
     e.preventDefault();
     setIsEditeActive(false);
   }
-
+  function handleExitClick() {
+    onExiteClick();
+    navigate('/');
+  }
   return (
     <section className='profile'>
       <p className='profile__title'>Привет,{user.name || ''}!</p>
       <form className='profile__form'>
-        <EditeInput title='Имя' value={user.name} type='text' isActive={isEditeActive} />
-        <p className='profile__line'></p>
-        <EditeInput title='E-mail' value={user.email} type='email' isActive={isEditeActive} />
+        <div className='profile__edits'>
+          <EditeInput title='Имя' value={user.name} type='text' isActive={isEditeActive} />
+          <p className='profile__line'></p>
+          <EditeInput title='E-mail' value={user.email} type='email' isActive={isEditeActive} />
+        </div>
         {isEditeActive && (
-          <div className='profile__submit-block'>
-            {isFailEdite && (
-              <p className='profile__submit-error'>При обновлении профиля произошла ошибка.</p>
-            )}
-            <button
-              className={`profile__submit ${isFailEdite && `profile__submit_disactive`}`}
-              type='submit'
-              onClick={handleSubmit}
+          <SubmitButton
+            textButton='Сохранить'
+            textError=''
+            handleSubmitClick={handleSubmit}
+            isError={false}
+            type='profile'
+          />
+        )}
+        {!isEditeActive && (
+          <ul className='profile__controls'>
+            <li className='profile__control' onClick={handleEditControlClick}>
+              Редактировать
+            </li>
+            <li
+              className='profile__control profile__signout-control_signout'
+              onClick={handleExitClick}
             >
-              Сохранить
-            </button>
-          </div>
+              Выйти из аккаунта
+            </li>
+          </ul>
         )}
       </form>
-      {!isEditeActive && (
-        <ul className='profile__controls'>
-          <li className='profile__edite-control' onClick={handleEditControlClick}>
-            Редактировать
-          </li>
-          <li className='profile__signout-control' onClick={onExiteClick}>
-            Выйти из аккаунта
-          </li>
-        </ul>
-      )}
     </section>
   );
 }

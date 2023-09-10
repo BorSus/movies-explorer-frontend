@@ -1,23 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-function MobileNavigation() {
+import Popup from '../Popup/Popup';
+function MobileNavigation({ isMobileMenuActive, onCloseClick }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const [isMobileMenuActive, setIsMobileMenuActive] = useState(false);
-  function handleMobileMenuClick() {
-    setIsMobileMenuActive(!isMobileMenuActive);
-  }
   function handleProfileClick() {
     navigate('/profile');
   }
   return (
-    <>
-      <div
-        className={`mobile-navigation__burger ${isMobileMenuActive && `active`}`}
-        onClick={handleMobileMenuClick}
-      >
-        <span></span>
-      </div>
+    <Popup isOpenPopup={isMobileMenuActive} onCloseClick={onCloseClick}>
       <nav className='mobile-navigation'>
         <div className='mobile-navigation__links'>
           <Link
@@ -49,7 +40,7 @@ function MobileNavigation() {
           Аккаунт
         </button>
       </nav>
-    </>
+    </Popup>
   );
 }
 export default MobileNavigation;

@@ -1,7 +1,7 @@
 import React from 'react';
 import TextColumn from '../TextColumn/TextColumn';
 import SectoinTitle from '../SectoinTitle/SectoinTitle';
-function AboutProject({}) {
+function AboutProject() {
   return (
     <section className='about-project'>
       <SectoinTitle text='О проекте' id='about-project' />

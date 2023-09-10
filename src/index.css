@@ -1,60 +1,33 @@
 @import url(./vendor/normalize.css);
-
-/* import styles fonts */
 @import url(./vendor/fonts/fonts.css);
-
-/* import App style */
 @import url(./components/App/App.css);
-/* import Header style */
 @import url(./components/Header/Header.css);
-/* import styles main*/
 @import url(./components/Main/Main.css);
-/* import styles promo*/
 @import url(./components/Promo/Promo.css);
-/* import styles navtab*/
 @import url(./components/NavTab/NavTab.css);
-/* import styles about-project*/
 @import url(./components/AboutProject/AboutProject.css);
-/* import styles text-column*/
 @import url(./components/TextColumn/TextColumn.css);
-/* import styles sectoin-title */
 @import url(./components/SectoinTitle/SectoinTitle.css);
-/* import styles techs*/
 @import url(./components/Techs/Techs.css);
-/* import styles about-me*/
 @import url(./components/AboutMe/AboutMe.css);
-/* import styles portfolio*/
 @import url(./components/Portfolio/Portfolio.css);
-/* import styles footer*/
 @import url(./components/Footer/Footer.css);
-/* import styles movies*/
 @import url(./components/Movies/Movies.css);
-/* import styles searchForm*/
 @import url(./components/SearchForm/SearchForm.css);
-/* import styles searchForm*/
-@import url(./components/SearchForm/SearchForm.css);
-/* import styles moviesCardList*/
 @import url(./components/MoviesCardList/MoviesCardList.css);
-/* import styles MoviesCard*/
 @import url(./components/MoviesCard/MoviesCard.css);
-/* import styles filterCheckbox*/
 @import url(./components/FilterCheckbox/FilterCheckbox.css);
-/* import styles Profile*/
 @import url(./components/Profile/Profile.css);
-/* import styles EditeInput*/
 @import url(./components/EditeInput/EditeInput.css);
-/* import styles Register*/
 @import url(./components/Register/Register.css);
-/* import styles ValidInput*/
 @import url(./components/ValidInput/ValidInput.css);
-/* import styles EntrySection*/
 @import url(./components/EntrySection/EntrySection.css);
-/* import styles Login*/
 @import url(./components/Login/Login.css);
-/* import styles PageNotFound*/
 @import url(./components/PageNotFound/PageNotFound.css);
-/* import styles Navigation*/
 @import url(./components/Navigation/Navigation.css);
-/* import styles SavedMovies*/
 @import url(./components/SavedMovies/SavedMovies.css);
 @import url(./components/MobileNavigation/MobileNavigation.css);
+@import url(./components/Popup/Popup.css);
+@import url(./components/SubmitButton/SubmitButton.css);
+@import url(./components/ErrorServer/ErrorServer.css);
+@import url(./components/Preloader/Preloader.css);

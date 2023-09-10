@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import MobileNavigation from '../MobileNavigation/MobileNavigation';
+
 function Navigation() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [isMobileMenuActive, setIsMobileMenuActive] = useState(false);
-  function handleMobileMenuClick() {
-    setIsMobileMenuActive(!isMobileMenuActive);
-  }
+
   function handleProfileClick() {
     navigate('/profile');
   }
@@ -36,13 +33,6 @@ function Navigation() {
       <button className='navigation__profile' onClick={handleProfileClick}>
         Аккаунт
       </button>
-      <div
-        className={`navigation__mobile-icon ${isMobileMenuActive && `active`}`}
-        onClick={handleMobileMenuClick}
-      >
-        <span></span>
-      </div>
-      {/* isMobileMenuActive && <MobileNavigation /> */}
     </>
   );
 }

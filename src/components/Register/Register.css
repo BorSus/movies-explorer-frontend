@@ -1,0 +1,13 @@
+.register__inputs {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 0px 0px 0px;
+  margin: 0px 0px 68px;
+  row-gap: 10px;
+}
+@media (max-width: 525px) {
+  .register__inputs {
+    margin: 0px 0px 157px;
+  }
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import imgLink from '../../images/link-arrow.svg';
-function Portfolio({}) {
+function Portfolio() {
   return (
     <section className='portfolio'>
       <p className='portfolio__title'>Портфолио</p>
@@ -12,7 +12,7 @@ function Portfolio({}) {
           target='_blank'
         >
           Статичный сайт
-          <img src={imgLink} alt='' className='portfolio__link-img' />
+          <img src={imgLink} alt='иконка стрелки' className='portfolio__link-img' />
         </Link>
         <Link
           to='https://borsus.github.io/russian-travel/'
@@ -20,7 +20,7 @@ function Portfolio({}) {
           target='_blank'
         >
           Адаптивный сайт
-          <img src={imgLink} alt='' className='portfolio__link-img' />
+          <img src={imgLink} alt='иконка стрелки' className='portfolio__link-img' />
         </Link>
         <Link
           to='https://borsus.github.io/mesto-react/'

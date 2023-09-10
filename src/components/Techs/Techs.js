@@ -1,6 +1,6 @@
 import React from 'react';
 import SectoinTitle from '../SectoinTitle/SectoinTitle';
-function Techs({}) {
+function Techs() {
   return (
     <section className='techs'>
       <SectoinTitle text='Технологии' id='techs' />

@@ -5,3 +5,13 @@
   width: 100%;
   background-color: white;
 }
+@media (max-width: 768px) {
+  .saved-movies {
+    padding: 0px 30px;
+  }
+}
+@media (max-width: 525px) {
+  .saved-movies {
+    padding: 0px 0px;
+  }
+}

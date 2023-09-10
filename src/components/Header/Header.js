@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import logo from '../../images/logo.svg';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
-function Header({ isLoggedIn }) {
+function Header({ isLoggedIn, handleMobileMenuClick }) {
   const navigate = useNavigate();
   const location = useLocation();
   function handleLogoClick() {
@@ -28,6 +28,20 @@ function Header({ isLoggedIn }) {
         )}
       </div>
       {isLoggedIn && <Navigation />}
+      {isLoggedIn && (
+        <div
+          className={`header__burger-menu  ${
+            location.pathname === '/' && `header__burger-menu_main`
+          }`}
+          onClick={handleMobileMenuClick}
+        >
+          <span
+            className={`header__burger-line  ${
+              location.pathname === '/' && `header__burger-line_main`
+            }`}
+          ></span>
+        </div>
+      )}
     </header>
   );
 }

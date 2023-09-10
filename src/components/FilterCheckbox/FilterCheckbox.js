@@ -1,3 +1,4 @@
+import React from 'react';
 function FilterCheckbox({ label }) {
   return (
     <div className='filterCheckbox'>

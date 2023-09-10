@@ -27,7 +27,6 @@
   flex-direction: column;
   width: 100%;
   min-height: 266px;
-  row-gap: 10px;
   margin: 0px;
   padding: 0px;
 }
@@ -57,13 +56,51 @@
   text-align: center;
   color: #ff6838;
   text-decoration: none;
+  transition: opacity 0.2s linear;
+}
+.entry-section__link:hover {
+  opacity: 0.8;
 }
 .entry-section__link-info {
-  margin: 0px auto;
+  box-sizing: border-box;
+  margin: 17px 0px 30px 0px;
   font-size: 14px;
   font-weight: 400;
   line-height: 17px;
   letter-spacing: 0em;
   text-align: center;
   color: #a0a0a0;
+}
+@media (max-width: 768px) {
+  .entry-section {
+    width: 396px;
+    margin: 0px auto;
+    padding: 232px 0px;
+  }
+}
+@media (max-width: 525px) {
+  .entry-section {
+    width: 100%;
+    margin: 0px auto;
+    padding: 56px 30px 0px;
+    align-items: center;
+    justify-content: center;
+  }
+  .entry-section__title {
+    margin: 50px 0px 80px;
+  }
+  .entry-section__submit {
+    margin: 157px 0px 14px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .entry-section__link {
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .entry-section__link-info {
+    margin: 14px 0px 30px 0px;
+    font-size: 12px;
+    line-height: 15px;
+  }
 }

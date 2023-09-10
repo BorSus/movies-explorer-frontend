@@ -25,10 +25,21 @@
   letter-spacing: -0.04em;
   color: white;
 }
-@media (max-width: 768px) {
+@media (max-width: 780px) {
   .promo {
     height: 784px;
     padding: 0px 0px 17px;
-    background-position: 50% calc(50% - 8px);
+    background-position: 50% calc(50% - 18px);
+  }
+}
+@media (max-width: 525px) {
+  .promo {
+    height: 570px;
+    padding: 0px 0px 40px;
+    background-size: 248px 248px;
+  }
+  .promo__title {
+    font-size: 31px;
+    line-height: 39px;
   }
 }

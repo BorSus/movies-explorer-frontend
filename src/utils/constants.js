@@ -1,3 +1,13 @@
+export const errors = {
+  loginBadPassword: 'Вы ввели неправильный логин или пароль.',
+  loginNotToken: 'При авторизации произошла ошибка. Токен не передан или передан не в том формате.',
+  loginBadToken: 'При авторизации произошла ошибка. Переданный токен некорректен.',
+  registerConflictEmail: 'Пользователь с таким email уже существует.',
+  registerBadResponse: 'При регистрации пользователя произошла ошибка.',
+  profileConflictEmail: 'Пользователь с таким email уже существует.',
+  profileBadResponse: 'При обновлении профиля произошла ошибка.'
+};
+
 export const testCards = [
   {
     id: 1,

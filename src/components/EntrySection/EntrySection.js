@@ -1,8 +1,7 @@
 import React from 'react';
 import logo from '../../images/logo.svg';
 import { Link, useNavigate } from 'react-router-dom';
-
-function EntrySection({ title, submit, linkInfo, link, path, children, handleSubmit }) {
+function EntrySection({ title, linkInfo, link, path, children }) {
   const navigate = useNavigate();
   function handleLogoClick() {
     navigate('/');
@@ -10,11 +9,8 @@ function EntrySection({ title, submit, linkInfo, link, path, children, handleSub
   return (
     <section className='entry-section'>
       <img src={logo} alt='Логотип' className='entry-section__logo' onClick={handleLogoClick} />
-      <p className='entry-section__title'>{title}</p>
+      <h1 className='entry-section__title'>{title}</h1>
       <form className='entry-section__form'>{children}</form>
-      <button className='entry-section__submit' type='submit' onClick={handleSubmit}>
-        {submit}
-      </button>
       <span className='entry-section__link-info'>
         {linkInfo}
         <Link to={path} className='entry-section__link'>
