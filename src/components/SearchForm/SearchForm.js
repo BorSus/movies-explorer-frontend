@@ -7,11 +7,11 @@ function SearchForm({ handleSearchClick }) {
     handleSearchClick();
   }
   return (
-    <section className='searchForm'>
-      <form className='searchForm__searchBar'>
-        <input type='text' className='searchForm__input' placeholder='Фильм'></input>
-        <button className='searchForm__button' type='submit' onClick={onSearchClick || null}>
-          <img src={icon} alt='иконка поиска' className='searchForm__button-icon' />
+    <section className='search-form'>
+      <form className='search-form__search-bar'>
+        <input type='text' className='search-form__input' placeholder='Фильм'></input>
+        <button className='search-form__button' type='submit' onClick={onSearchClick || null}>
+          <img src={icon} alt='иконка поиска' className='search-form__button-icon' />
         </button>
       </form>
       <FilterCheckbox label='Короткометражки' />

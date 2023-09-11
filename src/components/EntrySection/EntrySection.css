@@ -11,6 +11,11 @@
   height: 38px;
   margin: 0px;
   padding: 0px;
+  cursor: pointer;
+  transition: opacity 0.2s linear;
+}
+.entry-section__logo {
+  opacity: 0.8;
 }
 .entry-section__title {
   margin: 40px 0px;

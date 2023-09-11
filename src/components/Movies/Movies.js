@@ -11,7 +11,7 @@ function Movies({ handleSearchClick }) {
   }
   const isNullSearch = testCards.length > 0;
   return (
-    <section className='movies'>
+    <main className='movies'>
       <SearchForm handleSearchClick={handleSearchClick} />
       {isNullSearch ? (
         <MoviesCardList cards={testCards} />
@@ -20,11 +20,10 @@ function Movies({ handleSearchClick }) {
       )}
 
       {isLoading && <Preloader />}
-
       <button className='movies__button' onClick={handleMoreClick}>
         Ещё
       </button>
-    </section>
+    </main>
   );
 }
 export default Movies;

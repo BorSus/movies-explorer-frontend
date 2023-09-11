@@ -17,13 +17,25 @@ function Profile({ user, onExiteClick }) {
     navigate('/');
   }
   return (
-    <section className='profile'>
+    <main className='profile'>
       <p className='profile__title'>Привет,{user.name || ''}!</p>
       <form className='profile__form'>
         <div className='profile__edits'>
-          <EditeInput title='Имя' value={user.name} type='text' isActive={isEditeActive} />
+          <EditeInput
+            title='Имя'
+            value={user.name}
+            type='text'
+            isActive={isEditeActive}
+            placeholder='Введите имя'
+          />
           <p className='profile__line'></p>
-          <EditeInput title='E-mail' value={user.email} type='email' isActive={isEditeActive} />
+          <EditeInput
+            title='E-mail'
+            value={user.email}
+            type='email'
+            isActive={isEditeActive}
+            placeholder='Введите e-mail'
+          />
         </div>
         {isEditeActive && (
           <SubmitButton
@@ -40,7 +52,7 @@ function Profile({ user, onExiteClick }) {
               Редактировать
             </li>
             <li
-              className='profile__control profile__signout-control_signout'
+              className='profile__control profile__control_type_signout'
               onClick={handleExitClick}
             >
               Выйти из аккаунта
@@ -48,7 +60,7 @@ function Profile({ user, onExiteClick }) {
           </ul>
         )}
       </form>
-    </section>
+    </main>
   );
 }
 export default Profile;

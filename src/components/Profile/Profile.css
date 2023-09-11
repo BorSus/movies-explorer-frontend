@@ -49,8 +49,12 @@
   text-align: center;
   text-decoration: none;
   cursor: pointer;
+  transition: opacity 0.2s linear;
 }
-.profile__signout-control_signout {
+.profile__control:hover {
+  opacity: 0.8;
+}
+.profile__control_type_signout {
   color: #ee3465;
 }
 @media (max-width: 768px) {

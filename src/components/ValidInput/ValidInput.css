@@ -4,9 +4,7 @@
   margin: 0px;
   padding: 0px;
 }
-.valid-input_error {
-  color: #ee3465;
-}
+
 .valid-input__title {
   margin: 0px;
   padding: 0px;
@@ -32,8 +30,15 @@
   letter-spacing: 0em;
   text-align: left;
 }
+.valid-input__input::placeholder {
+  color: #a0a0a0;
+}
+
 .valid-input__input:focus {
-  outline: none;
+  outline: 1px solid #ff6838;
+}
+.valid-input__input_error {
+  color: #ee3465;
 }
 .valid-input__error {
   font-size: 10px;

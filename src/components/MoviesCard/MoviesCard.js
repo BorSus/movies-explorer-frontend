@@ -8,21 +8,21 @@ function MoviesCard({ card }) {
   }
   const locatioin = useLocation();
   return (
-    <div className='moviesCard'>
-      <img className='moviesCard__img' src={card.image} alt='' />
-      <div className='moviesCard__info'>
-        <p className='moviesCard__name'>{card.nameRU}</p>
+    <li className='movies-card'>
+      <img className='movies-card__img' src={card.image} alt={card.nameRU} />
+      <div className='movies-card__info'>
+        <p className='movies-card__name'>{card.nameRU}</p>
         {locatioin.pathname === '/movies' ? (
           <button
-            className={`moviesCard__save ${isSavedMovie && `moviesCard__save_true`}`}
+            className={`movies-card__save ${isSavedMovie && `movies-card__save_true`}`}
             onClick={handlerOnClickSave}
           ></button>
         ) : (
-          <img src={delImg} alt='иконка удалить' className='moviesCard__delete' />
+          <img src={delImg} alt='иконка удалить' className='movies-card__delete' />
         )}
       </div>
-      <p className='moviesCard__duration'>{card.duration}</p>
-    </div>
+      <p className='movies-card__duration'>{card.duration}</p>
+    </li>
   );
 }
 export default MoviesCard;

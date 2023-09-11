@@ -38,7 +38,9 @@
   color: #ff6838;
   background-color: unset;
   border: none;
+  cursor: pointer;
 }
+
 @media (max-width: 768px) {
   .page-not-found__code {
     margin: 408px auto 0px;

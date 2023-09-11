@@ -13,7 +13,7 @@ function Header({ isLoggedIn, handleMobileMenuClick }) {
   }
 
   return (
-    <header className={`header ${location.pathname === '/' && `header_main`}`}>
+    <header className={`header ${location.pathname === '/' ? `header_main` : ''}`}>
       <img src={logo} alt='Логотип' className='header__logo' onClick={handleLogoClick} />
       <div className='header__control'>
         {!isLoggedIn && (
@@ -31,13 +31,13 @@ function Header({ isLoggedIn, handleMobileMenuClick }) {
       {isLoggedIn && (
         <div
           className={`header__burger-menu  ${
-            location.pathname === '/' && `header__burger-menu_main`
+            location.pathname === '/' ? `header__burger-menu_main` : ''
           }`}
           onClick={handleMobileMenuClick}
         >
           <span
             className={`header__burger-line  ${
-              location.pathname === '/' && `header__burger-line_main`
+              location.pathname === '/' ? `header__burger-line_main` : ''
             }`}
           ></span>
         </div>

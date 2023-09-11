@@ -4,11 +4,11 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 function MoviesCardList({ cards }) {
   return (
     <>
-      <section className='moviesCardList'>
+      <ul className='movies-card-list'>
         {cards.map(cardItem => (
           <MoviesCard card={cardItem} key={cardItem.id} />
         ))}
-      </section>
+      </ul>
     </>
   );
 }

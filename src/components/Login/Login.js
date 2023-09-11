@@ -13,25 +13,32 @@ function Login({ onEnterClick }) {
     navigate('/movies');
   }
   return (
-    <EntrySection
-      title='Рады видеть!'
-      submit='Войти'
-      linkInfo='Ещё не зарегистрированы?'
-      link='Регистрация'
-      path='/signup'
-    >
-      <div className='login__inputs'>
-        <ValidInput title='E-mail' type='email' />
-        <ValidInput title='Пароль' type='password' error='Что-то пошло не так...' />
-      </div>
-      <SubmitButton
-        textButton='Войти'
-        handleSubmitClick={handleSubmitClick}
-        isError={isError}
-        type='entry'
-        textError={textError}
-      />
-    </EntrySection>
+    <main className='login'>
+      <EntrySection
+        title='Рады видеть!'
+        submit='Войти'
+        linkInfo='Ещё не зарегистрированы?'
+        link='Регистрация'
+        path='/signup'
+      >
+        <div className='login__inputs'>
+          <ValidInput title='E-mail' type='email' placeholder='Введите e-mail' />
+          <ValidInput
+            title='Пароль'
+            type='password'
+            error='Что-то пошло не так...'
+            placeholder='Введите пароль'
+          />
+        </div>
+        <SubmitButton
+          textButton='Войти'
+          handleSubmitClick={handleSubmitClick}
+          isError={isError}
+          type='entry'
+          textError={textError}
+        />
+      </EntrySection>
+    </main>
   );
 }
 export default Login;

@@ -8,14 +8,16 @@ function AboutMe() {
       <SectoinTitle text='Студент' id='about-me' />
       <div className='about-me__info'>
         <div className='about-me__description'>
-          <p className='about-me__name'>Борис</p>
-          <p className='about-me__profession'>Фронтенд-разработчик, 32 года</p>
-          <p className='about-me__characteristic'>
-            Я живу в деревне Сабурово, закончил факультет прикладной информатики и математики. У
-            меня есть жена и дочь.Я их очень люблю. Я работаю инженером в области радиоэлектронки.
-            Учеба в яндекс практикуме я начал, для того , чтобы создавать веб-интерфейс для
-            радио-модемов.
-          </p>
+          <div>
+            <p className='about-me__name'>Борис</p>
+            <p className='about-me__profession'>Фронтенд-разработчик, 32 года</p>
+            <p className='about-me__characteristic'>
+              Я живу в деревне Сабурово, закончил факультет прикладной информатики и математики. У
+              меня есть жена и дочь.Я их очень люблю. Я работаю инженером в области радиоэлектронки.
+              Учеба в яндекс практикуме я начал, для того , чтобы создавать веб-интерфейс для
+              радио-модемов.
+            </p>
+          </div>
           <Link to='https://github.com/BorSus' className='about-me__github-link' target='_blank'>
             Github
           </Link>
