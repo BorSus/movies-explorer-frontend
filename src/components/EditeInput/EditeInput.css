@@ -1,0 +1,30 @@
+.edite-input {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.edite-input__title {
+  margin: 0px;
+  padding: 0px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 13px;
+  text-align: left;
+  white-space: nowrap;
+}
+.edite-input__value {
+  width: 100%;
+  border: none;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 13px;
+  text-align: right;
+}
+.edite-input__value:focus {
+  outline: 1px solid #3456f3;
+}
+.edite-input__value:disabled {
+  background: none;
+  color: black;
+}

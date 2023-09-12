@@ -1,0 +1,17 @@
+.sectoin-title {
+  margin: 0px 0px 0px;
+  padding: 0px 0px 23px;
+  font-size: 22px;
+  line-height: 27px;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  color: black;
+  border-bottom: 1px solid black;
+}
+@media (max-width: 525px) {
+  .sectoin-title {
+    font-size: 18px;
+    line-height: 22px;
+    padding: 0px 0px 28px;
+  }
+}
