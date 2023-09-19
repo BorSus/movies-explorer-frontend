@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
-
-function MoviesCardList({ cards }) {
+function MoviesCardList({ moviesCards, showCards, savedMovies, updateSavedMovies }) {
   return (
     <>
       <ul className='movies-card-list'>
-        {cards.map(cardItem => (
-          <MoviesCard card={cardItem} key={cardItem.id} />
+        {moviesCards.slice(0, showCards).map(cardItem => (
+          <MoviesCard
+            card={cardItem}
+            key={cardItem.id || cardItem.movieId}
+            savedMovies={savedMovies}
+            updateSavedMovies={updateSavedMovies}
+          />
         ))}
       </ul>
     </>

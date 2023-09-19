@@ -1,26 +1,32 @@
 import React, { useEffect, useState } from 'react';
 
-function EditeInput({ title, value, type, isActive, placeholder }) {
-  const [inputValue, setInputValue] = useState('');
-  function handleChange(e) {
-    setInputValue(e.target.value);
-  }
-  useEffect(() => {
-    setInputValue(value);
-  }, []);
+function EditeInput({
+  title,
+  value,
+  type,
+  isActive,
+  placeholder,
+  name,
+  minLength,
+  maxLength,
+  pattern,
+  handleChangeInput
+}) {
   return (
     <div className='edite-input'>
       <p className='edite-input__title'>{title || ''}</p>
       <input
-        type={type}
         className='edite-input__value'
-        value={inputValue || ''}
+        name={name}
+        type={type}
+        minLength={minLength}
+        maxLength={maxLength}
+        pattern={pattern}
+        value={value || ''}
         disabled={!isActive}
         required
-        minLength='2'
-        maxLength='30'
         placeholder={placeholder}
-        onChange={handleChange}
+        onChange={handleChangeInput}
       />
     </div>
   );

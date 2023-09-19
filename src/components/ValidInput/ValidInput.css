@@ -40,6 +40,9 @@
 .valid-input__input_error {
   color: #ee3465;
 }
+.valid-input__input_error:focus {
+  outline: 1px solid #ee3465;
+}
 .valid-input__error {
   font-size: 10px;
   font-weight: 400;

@@ -1,3 +1,11 @@
+const enviroment = process.env.NODE_ENV;
+console.log(enviroment);
+const baseUrl =
+  enviroment === 'development'
+    ? process.env.REACT_APP_LOCALHOST_URL
+    : process.env.REACT_APP_SERVER_BACKEND_URL;
+console.log(baseUrl);
+
 export const errors = {
   loginBadPassword: 'Вы ввели неправильный логин или пароль.',
   loginNotToken: 'При авторизации произошла ошибка. Токен не передан или передан не в том формате.',
@@ -6,6 +14,19 @@ export const errors = {
   registerBadResponse: 'При регистрации пользователя произошла ошибка.',
   profileConflictEmail: 'Пользователь с таким email уже существует.',
   profileBadResponse: 'При обновлении профиля произошла ошибка.'
+};
+
+export const optionsMainApi = {
+  //Адрес сервера
+  baseUrl: baseUrl,
+  //[Аутентификация]
+  urlSignup: '/signup', //Регистрация
+  urlSignin: '/signin', //Вход
+  urlSignout: '/signout', //Выход
+  //[Аккаунт]
+  urlUserMe: '/users/me',
+  //[Фильмы]
+  urlMovies: '/movies'
 };
 
 export const testCards = [

@@ -43,6 +43,7 @@
 .submit__button_type_disactive {
   background: #f8f8f8;
   color: #c2c2c2;
+  pointer-events: none;
 }
 .submit__button_type_profile {
   background: #3456f3;

@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
 import '../../index.css';
-// import components
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -14,55 +13,97 @@ import PageNotFound from '../PageNotFound/PageNotFound';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import MobileNavigation from '../MobileNavigation/MobileNavigation';
 import ErrorServer from '../ErrorServer/ErrorServer';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import { api } from '../../utils/MainApi.js';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
+
 function App() {
   const location = useLocation();
+  const navigate = useNavigate();
+  //  переменная состояния = авторизированный пользователь
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  //  переменная состояния = данные пользователя
+  const [currentUser, setСurrentUser] = useState({});
+  //  переменная состояния = сохраненные фильмы пользователя
+  const [savedMovies, setSavedMovies] = useState([]);
+
+  //  переменная состояния = статус активности MobileMenu
   const [isMobileMenuActive, setIsMobileMenuActive] = useState(false);
+
   const [isErrorServerOpen, setErrorServerOpen] = useState(false);
+
   const wrapRoutes =
     location.pathname === '/' ||
     location.pathname === '/movies' ||
     location.pathname === '/saved-movies';
+
+  //Функция проверки корректности токена, получение данный пользователя.
+  async function checkToken(location) {
+    try {
+      setСurrentUser(await api.getUserMe());
+      setSavedMovies(await api.getSavedMovies());
+      setIsLoggedIn(true);
+      navigate(location);
+    } catch (error) {
+      setIsLoggedIn(false);
+      console.error(`Ошибка при проверки корректности токена: ${error}`);
+    } finally {
+      console.info('Проверки корректности токена-завершено');
+    }
+  }
+  //Проверка токена при загрузке
+  useEffect(() => {
+    checkToken(location.pathname);
+  }, []);
+
   function handleMobileMenuClick() {
     setIsMobileMenuActive(!isMobileMenuActive);
   }
 
-  function handleExiteClick() {
-    setIsLoggedIn(false);
+  async function updateSavedMovies() {
+    const response = await api.getSavedMovies();
+    setSavedMovies(response);
   }
-  function handleEnterClick() {
-    setIsLoggedIn(true);
-  }
-  function handleSearchClick() {
-    setErrorServerOpen(true);
-  }
+
   function handleCloseErrorServer() {
     setErrorServerOpen(false);
   }
   return (
-    <>
+    <CurrentUserContext.Provider value={currentUser}>
       {(wrapRoutes || location.pathname === '/profile') && (
         <Header isLoggedIn={isLoggedIn} handleMobileMenuClick={handleMobileMenuClick} />
       )}
 
       <Routes>
         <Route path='/' element={<Main />} />
-        <Route path='/movies' element={<Movies handleSearchClick={handleSearchClick} />} />
+        <Route
+          path='/movies'
+          element={
+            <ProtectedRoute
+              isLoggedIn={isLoggedIn}
+              element={<Movies savedMovies={savedMovies} updateSavedMovies={updateSavedMovies} />}
+            />
+          }
+        />
         <Route
           path='/saved-movies'
-          element={<SavedMovies handleSearchClick={handleSearchClick} />}
+          element={
+            <ProtectedRoute
+              isLoggedIn={isLoggedIn}
+              element={
+                <SavedMovies savedMovies={savedMovies} updateSavedMovies={updateSavedMovies} />
+              }
+            />
+          }
         />
         <Route
           path='/profile'
           element={
-            <Profile
-              user={{ name: 'Борис', email: 'boris@mail.ru' }}
-              onExiteClick={handleExiteClick}
-            />
+            <ProtectedRoute isLoggedIn={isLoggedIn} element={<Profile checkToken={checkToken} />} />
           }
         />
-        <Route path='/signin' element={<Login onEnterClick={handleEnterClick} />} />
-        <Route path='/signup' element={<Register />} />
+        <Route path='/signin' element={<Login checkToken={checkToken} />} />
+        <Route path='/signup' element={<Register checkToken={checkToken} />} />
         <Route path='*' element={<PageNotFound code='404' info='Страница не найдена' />} />
       </Routes>
       {wrapRoutes && <Footer />}
@@ -75,7 +116,7 @@ function App() {
         isErrorServerOpen={isErrorServerOpen}
         handleCloseErrorServer={handleCloseErrorServer}
       />
-    </>
+    </CurrentUserContext.Provider>
   );
 }
 
