@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
-import { apiMovies } from '../../utils/MoviesApi.js';
+
 import CustomError from '../../utils/CustomError.js';
 import { filterMovies, saveLocalStorage } from '../../utils/FilterMovies.js';
-function Movies({ savedMovies, updateSavedMovies }) {
+function Movies({ savedMovies, updateSavedMovies, allMovies }) {
   // фильмы для отрисовки карточек
   const [moviesCards, setMoviesCards] = useState([]);
   // индикатор прелоадера
@@ -21,12 +21,11 @@ function Movies({ savedMovies, updateSavedMovies }) {
     total: null,
     more: null
   });
-  const [showCards, setShowCards] = useState(null);
+  const [showCards, setShowCards] = useState(16);
   // Обработчик изменения значения поиска
   function handleChangeInput(e) {
     setSearchInput(e.target.value);
   }
-
   async function handleSearchClick() {
     try {
       if (!searchInput) {
@@ -34,7 +33,8 @@ function Movies({ savedMovies, updateSavedMovies }) {
       }
       setIsLoading(true);
       setInfoMessage('Идет поиск');
-      const allMovies = await apiMovies.getAllMovies();
+      //const allMovies = await apiMovies.getAllMovies();
+
       const filteredMovies = filterMovies(allMovies, searchInput, isShortFilm);
       if (filteredMovies.length === 0) {
         throw new CustomError('Ничего не найдено');
@@ -63,21 +63,18 @@ function Movies({ savedMovies, updateSavedMovies }) {
   function handleFilterCheckboxClick() {
     setIsShortFilm(!isShortFilm);
   }
-  useEffect(() => {
+  function loadLocalStorage() {
     const localStorageData = JSON.parse(localStorage.getItem('filеredMovies'));
     if (!localStorageData) {
       setIsShortFilm(false);
       setInfoMessage('Нужно ввести ключевое слово');
     } else {
+      setShowCards(cardsSettings.total);
       setMoviesCards(localStorageData.filtеredMovies);
       setIsShortFilm(localStorageData.isShortFilm);
       setSearchInput(localStorageData.searchString);
     }
-  }, []);
-
-  useEffect(() => {
-    handleSearchClick();
-  }, [isShortFilm]);
+  }
 
   //Функция проверки размера ширины
   // контрольные точки настроены на FireFox
@@ -110,6 +107,17 @@ function Movies({ savedMovies, updateSavedMovies }) {
     handleResize();
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+  console.log(cardsSettings);
+  useEffect(() => {
+    loadLocalStorage();
+    //eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    handleSearchClick();
+    //eslint-disable-next-line
+  }, [isShortFilm]);
+
   function handleMoreClick() {
     setShowCards(showCards + cardsSettings.more);
   }
@@ -128,7 +136,7 @@ function Movies({ savedMovies, updateSavedMovies }) {
       ) : (
         <MoviesCardList
           moviesCards={moviesCards}
-          showCards={showCards}
+          showCards={cardsSettings.total}
           savedMovies={savedMovies}
           updateSavedMovies={updateSavedMovies}
         />

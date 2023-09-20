@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import ValidInput from '../ValidInput/ValidInput';
 import EntrySection from '../EntrySection/EntrySection';
 import SubmitButton from '../SubmitButton/SubmitButton';
@@ -7,7 +6,6 @@ import { errors } from '../../utils/constants.js';
 import { api } from '../../utils/MainApi.js';
 
 function Login({ checkToken }) {
-  const navigate = useNavigate();
   //  переменная состояния значения ValidInput
   const [valueInputs, setValueInputs] = useState({
     email: '',
@@ -37,21 +35,20 @@ function Login({ checkToken }) {
   // Проверка валидации формы по валидности инпутов
   useEffect(() => {
     setIsValidForm(Object.values(validInputs).every(item => item === true));
-  }, [valueInputs]);
+  }, [validInputs]);
 
   //  Функция для submit формы EntrySection.
   async function handleSubmitForm() {
     try {
-      const user = await api.signin(valueInputs);
-      console.log(user.message);
+      await api.signin(valueInputs);
       checkToken('/movies');
     } catch (error) {
-      if (error === 'Ошибка: 401') {
+      if (error.message === 'Ошибка: 401') {
         setTextError(errors.loginBadPassword);
-      } else {
+      } else if (error.message === 'Ошибка: 400') {
         setTextError(errors.loginNotToken);
       }
-      console.error(`Ошибка при авторизации пользователя: ${error}`);
+      console.error(`Ошибка при авторизации пользователя: ${error.message}`);
     } finally {
       console.info('Авторизация пользователя-завершено');
     }

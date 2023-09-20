@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import ValidInput from '../ValidInput/ValidInput';
 import EntrySection from '../EntrySection/EntrySection';
 import SubmitButton from '../SubmitButton/SubmitButton';

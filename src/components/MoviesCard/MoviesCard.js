@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import delImg from '../../images/del-img.svg';
 import { api } from '../../utils/MainApi.js';
@@ -11,11 +11,6 @@ function MoviesCard({ card, savedMovies, updateSavedMovies }) {
     ? `https://api.nomoreparties.co${card.image.formats.thumbnail.url}`
     : card.thumbnail;
 
-  // async function updateSavedMovies() {
-  //   const response = await api.getSavedMovies();
-  //   setSavedMovies(response);
-  //   setIsSaved(response.some(movie => movie.movieId === card.id));
-  // }
   async function handleOnClickSave() {
     try {
       await api.postMovie({

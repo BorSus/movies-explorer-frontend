@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import EditeInput from '../EditeInput/EditeInput';
 import SubmitButton from '../SubmitButton/SubmitButton';
 import { api } from '../../utils/MainApi.js';
@@ -7,7 +6,6 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import { errors } from '../../utils/constants.js';
 
 function Profile({ checkToken }) {
-  const navigate = useNavigate();
   //Подписка на контекст данные пользователя
   const [currentUser, setСurrentUser] = useState(useContext(CurrentUserContext));
   //  переменная состояния значения EditeInput
@@ -37,7 +35,7 @@ function Profile({ checkToken }) {
       Object.values(validInputs).every(item => item === true) &&
         (currentUser.name !== valueInputs.name || currentUser.email !== valueInputs.email)
     );
-  }, [valueInputs]);
+  }, [valueInputs, validInputs, currentUser]);
 
   function handleEditControlClick() {
     setIsEditeActive(true);

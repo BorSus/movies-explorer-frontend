@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import icon from '../../images/icon-search.svg';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 

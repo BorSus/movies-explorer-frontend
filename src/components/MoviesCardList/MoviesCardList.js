@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 function MoviesCardList({ moviesCards, showCards, savedMovies, updateSavedMovies }) {
   return (

@@ -15,6 +15,7 @@ import MobileNavigation from '../MobileNavigation/MobileNavigation';
 import ErrorServer from '../ErrorServer/ErrorServer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { api } from '../../utils/MainApi.js';
+import { apiMovies } from '../../utils/MoviesApi.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 
 function App() {
@@ -26,9 +27,10 @@ function App() {
   const [currentUser, setСurrentUser] = useState({});
   //  переменная состояния = сохраненные фильмы пользователя
   const [savedMovies, setSavedMovies] = useState([]);
-
   //  переменная состояния = статус активности MobileMenu
   const [isMobileMenuActive, setIsMobileMenuActive] = useState(false);
+  // переменная состояния = все фильмы
+  const [allMovies, setAllMovies] = useState([]);
 
   const [isErrorServerOpen, setErrorServerOpen] = useState(false);
 
@@ -42,6 +44,7 @@ function App() {
     try {
       setСurrentUser(await api.getUserMe());
       setSavedMovies(await api.getSavedMovies());
+      setAllMovies(await apiMovies.getAllMovies());
       setIsLoggedIn(true);
       navigate(location);
     } catch (error) {
@@ -54,6 +57,7 @@ function App() {
   //Проверка токена при загрузке
   useEffect(() => {
     checkToken(location.pathname);
+    //eslint-disable-next-line
   }, []);
 
   function handleMobileMenuClick() {
@@ -81,7 +85,13 @@ function App() {
           element={
             <ProtectedRoute
               isLoggedIn={isLoggedIn}
-              element={<Movies savedMovies={savedMovies} updateSavedMovies={updateSavedMovies} />}
+              element={
+                <Movies
+                  savedMovies={savedMovies}
+                  updateSavedMovies={updateSavedMovies}
+                  allMovies={allMovies}
+                />
+              }
             />
           }
         />

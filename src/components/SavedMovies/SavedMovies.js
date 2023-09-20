@@ -43,6 +43,7 @@ function SavedMovies({ savedMovies, updateSavedMovies }) {
 
   useEffect(() => {
     handleSearchClick();
+    //eslint-disable-next-line
   }, [isShortFilm, savedMovies]);
 
   return (
