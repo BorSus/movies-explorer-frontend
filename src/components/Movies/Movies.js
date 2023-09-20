@@ -136,7 +136,7 @@ function Movies({ savedMovies, updateSavedMovies, allMovies }) {
       ) : (
         <MoviesCardList
           moviesCards={moviesCards}
-          showCards={cardsSettings.total}
+          showCards={showCards}
           savedMovies={savedMovies}
           updateSavedMovies={updateSavedMovies}
         />
