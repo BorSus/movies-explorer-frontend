@@ -7,6 +7,10 @@
 
 Ligth-2
 
+## Пулл-реквест:
+
+https://github.com/BorSus/movies-explorer-frontend/pull/2
+
 ## Описание проекта:
 
 Это учебный проект дипломной работы Яндекс Практикум:
