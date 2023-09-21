@@ -17,6 +17,7 @@
   object-position: center;
   aspect-ratio: 1.79/1;
   width: 100%;
+  cursor: pointer;
 }
 .movies-card__info {
   box-sizing: border-box;

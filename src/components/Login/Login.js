@@ -28,8 +28,16 @@ function Login({ checkToken }) {
 
   // Обработчик изменения инпутов
   function handleChangeInput(e) {
+    if (e.target.name === 'email' && e.target.validity.patternMismatch) {
+      setErrorInputs({
+        ...errorInputs,
+        [e.target.name]:
+          'поле E-mail должно содержать адрес электронной почты, например mail@mail.ru '
+      });
+    } else {
+      setErrorInputs({ ...errorInputs, [e.target.name]: e.target.validationMessage });
+    }
     setValueInputs({ ...valueInputs, [e.target.name]: e.target.value });
-    setErrorInputs({ ...errorInputs, [e.target.name]: e.target.validationMessage });
     setValidInputs({ ...validInputs, [e.target.name]: e.target.validity.valid });
   }
   // Проверка валидации формы по валидности инпутов
@@ -43,12 +51,13 @@ function Login({ checkToken }) {
       await api.signin(valueInputs);
       checkToken('/movies');
     } catch (error) {
-      if (error.message === 'Ошибка: 401') {
+      setIsValidForm(false);
+      if (error === 'Ошибка: 401') {
         setTextError(errors.loginBadPassword);
-      } else if (error.message === 'Ошибка: 400') {
+      } else if (error === 'Ошибка: 400') {
         setTextError(errors.loginNotToken);
       }
-      console.error(`Ошибка при авторизации пользователя: ${error.message}`);
+      console.error(`Ошибка при авторизации пользователя: ${error}`);
     } finally {
       console.info('Авторизация пользователя-завершено');
     }

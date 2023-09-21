@@ -18,6 +18,11 @@ function Profile({ checkToken }) {
     name: true,
     email: true
   });
+  // //  переменная состояния значения ошибок ValidInput
+  // const [errorInputs, setErrorInputs] = useState({
+  //   email: '',
+  //   password: ''
+  // });
   //  переменная состояния  значение валидности формы
   const [isValidForm, setIsValidForm] = useState(false);
   // переменная состояния  значение ошибки с сервера
@@ -26,6 +31,13 @@ function Profile({ checkToken }) {
   const [isEditeActive, setIsEditeActive] = useState(false);
   // Обработчик изменения инпутов
   function handleChangeInput(e) {
+    if (e.target.name === 'name' && e.target.validity.patternMismatch) {
+      setTextError('поле Имя может содержать только латиницу, кириллицу, пробел или дефис');
+    } else if (e.target.name === 'email' && e.target.validity.patternMismatch) {
+      setTextError('поле E-mail должно содержать адрес электронной почты, например mail@mail.ru');
+    } else {
+      setTextError(e.target.validationMessage);
+    }
     setValueInputs({ ...valueInputs, [e.target.name]: e.target.value });
     setValidInputs({ ...validInputs, [e.target.name]: e.target.validity.valid });
   }
@@ -35,7 +47,7 @@ function Profile({ checkToken }) {
       Object.values(validInputs).every(item => item === true) &&
         (currentUser.name !== valueInputs.name || currentUser.email !== valueInputs.email)
     );
-  }, [valueInputs, validInputs, currentUser]);
+  }, [validInputs, valueInputs, currentUser]);
 
   function handleEditControlClick() {
     setIsEditeActive(true);
@@ -46,6 +58,8 @@ function Profile({ checkToken }) {
       const editUser = await api.patchUserMe(valueInputs);
       setIsValidForm(false);
       setСurrentUser(editUser);
+      setIsEditeActive(false);
+      alert('Данные пользователя изменены');
     } catch (error) {
       setIsValidForm(false);
       if (error === 'Ошибка: 409') {
@@ -60,7 +74,9 @@ function Profile({ checkToken }) {
   }
   async function handleExitClick() {
     await api.signout();
-    localStorage.removeItem('filеredMovies');
+    localStorage.removeItem('foundMovies');
+    localStorage.removeItem('searchString');
+    localStorage.removeItem('isShortFilm');
     checkToken('/');
   }
   return (
@@ -74,7 +90,7 @@ function Profile({ checkToken }) {
             type='text'
             minLength='2'
             maxLength='30'
-            pattern='^[A-Za-z0-9\- ]*$'
+            pattern='^[A-Za-zА-Яа-яЁё0-9\- ]*$'
             value={valueInputs.name}
             isActive={isEditeActive}
             placeholder='Введите имя'

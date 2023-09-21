@@ -13,7 +13,7 @@ function MoviesCard({ card, savedMovies, updateSavedMovies }) {
 
   async function handleOnClickSave() {
     try {
-      await api.postMovie({
+      const response = await api.postMovie({
         country: card.country,
         director: card.director,
         duration: card.duration,
@@ -26,7 +26,7 @@ function MoviesCard({ card, savedMovies, updateSavedMovies }) {
         nameRU: card.nameRU,
         nameEN: card.nameEN
       });
-      await updateSavedMovies();
+      updateSavedMovies(true, response);
       setIsSaved(true);
     } catch {
       alert('Не удалось сохранить фильм');
@@ -38,19 +38,18 @@ function MoviesCard({ card, savedMovies, updateSavedMovies }) {
       const deleteMovie = savedMovies.find(movie => movie.movieId === card.id);
       await api.deleteMovie(deleteMovie._id);
       setIsSaved(false);
-      await updateSavedMovies();
+      updateSavedMovies(false, deleteMovie);
     } catch {
       alert('Не удалось удалить фильм');
-    } finally {
     }
   }
+
   async function deleteSavedMovieClick() {
     try {
       await api.deleteMovie(card._id);
-      await updateSavedMovies();
+      updateSavedMovies(false, card);
     } catch {
       alert('Не удалось удалить фильм');
-    } finally {
     }
   }
   function onCardClick() {

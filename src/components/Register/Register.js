@@ -29,8 +29,20 @@ function Register({ checkToken }) {
   const [textError, setTextError] = useState('');
   // Обработчик изменения инпутов
   function handleChangeInput(e) {
+    if (e.target.name === 'name' && e.target.validity.patternMismatch) {
+      setErrorInputs({
+        ...errorInputs,
+        [e.target.name]: 'поле Имя может содержать только латиницу, кириллицу, пробел или дефис'
+      });
+    } else if (e.target.name === 'email' && e.target.validity.patternMismatch) {
+      setErrorInputs({
+        ...errorInputs,
+        [e.target.name]: 'поле E-mail должно содержать адрес электронной, например mail@mail.ru '
+      });
+    } else {
+      setErrorInputs({ ...errorInputs, [e.target.name]: e.target.validationMessage });
+    }
     setValueInputs({ ...valueInputs, [e.target.name]: e.target.value });
-    setErrorInputs({ ...errorInputs, [e.target.name]: e.target.validationMessage });
     setValidInputs({ ...validInputs, [e.target.name]: e.target.validity.valid });
   }
 
@@ -78,7 +90,7 @@ function Register({ checkToken }) {
             minLength='2'
             maxLength='30'
             placeholder='Введите имя'
-            pattern='^[A-Za-z0-9\- ]*$'
+            pattern='^[A-Za-zА-Яа-яЁё0-9\- ]*$'
             handleChangeInput={handleChangeInput}
             value={valueInputs.name}
             error={errorInputs.name}

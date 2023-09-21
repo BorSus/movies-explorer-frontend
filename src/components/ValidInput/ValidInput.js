@@ -28,7 +28,7 @@ function ValidInput({
         value={value}
         onChange={handleChangeInput}
       />
-      <span className='valid-input__error'>{error}</span>
+      <span className='valid-input__error'>{error || ' '}</span>
     </div>
   );
 }

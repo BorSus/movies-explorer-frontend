@@ -1,7 +1,7 @@
 const filterMovies = (allMovies, searchString, isShortFilm) => {
-  let filеredMovies = [];
+  let filtеredMovies = [];
 
-  filеredMovies = allMovies.filter(movie =>
+  filtеredMovies = allMovies.filter(movie =>
     isShortFilm
       ? (movie.nameRU.toLowerCase().trim().includes(searchString.toLowerCase()) ||
           movie.nameRU.toLowerCase().trim().includes(searchString.toLowerCase())) &&
@@ -9,17 +9,12 @@ const filterMovies = (allMovies, searchString, isShortFilm) => {
       : movie.nameRU.toLowerCase().trim().includes(searchString.toLowerCase()) ||
         movie.nameRU.toLowerCase().trim().includes(searchString.toLowerCase())
   );
-  return filеredMovies;
+  return filtеredMovies;
 };
 const saveLocalStorage = (filtеredMovies, searchString, isShortFilm) => {
-  localStorage.setItem(
-    'filеredMovies',
-    JSON.stringify({
-      filtеredMovies: filtеredMovies,
-      searchString: searchString,
-      isShortFilm: isShortFilm
-    })
-  );
+  localStorage.setItem('foundMovies', JSON.stringify(filtеredMovies));
+  localStorage.setItem('searchString', JSON.stringify(searchString));
+  localStorage.setItem('isShortFilm', JSON.stringify(isShortFilm));
 };
 
 export { filterMovies, saveLocalStorage };

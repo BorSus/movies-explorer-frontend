@@ -12,10 +12,8 @@ import Login from '../Login/Login';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import MobileNavigation from '../MobileNavigation/MobileNavigation';
-import ErrorServer from '../ErrorServer/ErrorServer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { api } from '../../utils/MainApi.js';
-import { apiMovies } from '../../utils/MoviesApi.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 
 function App() {
@@ -30,9 +28,6 @@ function App() {
   //  переменная состояния = статус активности MobileMenu
   const [isMobileMenuActive, setIsMobileMenuActive] = useState(false);
   // переменная состояния = все фильмы
-  const [allMovies, setAllMovies] = useState([]);
-
-  const [isErrorServerOpen, setErrorServerOpen] = useState(false);
 
   const wrapRoutes =
     location.pathname === '/' ||
@@ -44,7 +39,6 @@ function App() {
     try {
       setСurrentUser(await api.getUserMe());
       setSavedMovies(await api.getSavedMovies());
-      setAllMovies(await apiMovies.getAllMovies());
       setIsLoggedIn(true);
       navigate(location);
     } catch (error) {
@@ -64,14 +58,14 @@ function App() {
     setIsMobileMenuActive(!isMobileMenuActive);
   }
 
-  async function updateSavedMovies() {
-    const response = await api.getSavedMovies();
-    setSavedMovies(response);
+  async function updateSavedMovies(save, movie) {
+    save
+      ? setSavedMovies([movie, ...savedMovies])
+      : setSavedMovies(state => state.filter(stateMovie => stateMovie !== movie));
+    // const response = await api.getSavedMovies();
+    // setSavedMovies(response);
   }
 
-  function handleCloseErrorServer() {
-    setErrorServerOpen(false);
-  }
   return (
     <CurrentUserContext.Provider value={currentUser}>
       {(wrapRoutes || location.pathname === '/profile') && (
@@ -85,13 +79,7 @@ function App() {
           element={
             <ProtectedRoute
               isLoggedIn={isLoggedIn}
-              element={
-                <Movies
-                  savedMovies={savedMovies}
-                  updateSavedMovies={updateSavedMovies}
-                  allMovies={allMovies}
-                />
-              }
+              element={<Movies savedMovies={savedMovies} updateSavedMovies={updateSavedMovies} />}
             />
           }
         />
@@ -120,11 +108,6 @@ function App() {
       <MobileNavigation
         isMobileMenuActive={isMobileMenuActive}
         onCloseClick={handleMobileMenuClick}
-      />
-      <ErrorServer
-        message='Сервер временно не доступен'
-        isErrorServerOpen={isErrorServerOpen}
-        handleCloseErrorServer={handleCloseErrorServer}
       />
     </CurrentUserContext.Provider>
   );
