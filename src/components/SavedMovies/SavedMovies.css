@@ -1,9 +1,10 @@
 .saved-movies {
   box-sizing: border-box;
-  margin: 0px 0px 139px;
+  margin: 0px 0px;
   padding: 0px 70px;
   width: 100%;
   background-color: white;
+  min-height: calc(100vh - 247px);
 }
 @media (max-width: 768px) {
   .saved-movies {

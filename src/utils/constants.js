@@ -1,3 +1,14 @@
+//Переменные окружения
+const enviroment = process.env.NODE_ENV;
+console.log(enviroment);
+const baseUrl =
+  enviroment === 'development'
+    ? process.env.REACT_APP_LOCALHOST_URL
+    : process.env.REACT_APP_SERVER_BACKEND_URL;
+console.log(baseUrl);
+//Короткометражки
+export const shortFilmDuration = 40;
+// Тексты ошибок
 export const errors = {
   loginBadPassword: 'Вы ввели неправильный логин или пароль.',
   loginNotToken: 'При авторизации произошла ошибка. Токен не передан или передан не в том формате.',
@@ -8,6 +19,44 @@ export const errors = {
   profileBadResponse: 'При обновлении профиля произошла ошибка.'
 };
 
+// контрольные точки ширины экрана настроены на FireFox
+export const widthScreenPoint = {
+  desctop: 1280,
+  tablet: 990,
+  mobile: 768
+};
+export const paramsCardsForWidth = {
+  desctop: {
+    initial: 16,
+    count: 4
+  },
+  notebook: {
+    initial: 12,
+    count: 3
+  },
+  tablet: {
+    initial: 8,
+    count: 2
+  },
+  mobile: {
+    initial: 5,
+    count: 2
+  }
+};
+// Настройки бэкэнда
+export const optionsMainApi = {
+  //Адрес сервера
+  baseUrl: baseUrl,
+  //[Аутентификация]
+  urlSignup: '/signup', //Регистрация
+  urlSignin: '/signin', //Вход
+  urlSignout: '/signout', //Выход
+  //[Аккаунт]
+  urlUserMe: '/users/me',
+  //[Фильмы]
+  urlMovies: '/movies'
+};
+// Тестовые карточки
 export const testCards = [
   {
     id: 1,

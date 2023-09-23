@@ -9,33 +9,31 @@ function Navigation() {
     navigate('/profile');
   }
   return (
-    <>
-      <nav className='navigation'>
-        <div className='navigation__links'>
-          <Link
-            to='/movies'
-            className={`navigation__link 
+    <nav className='navigation'>
+      <div className='navigation__links'>
+        <Link
+          to='/movies'
+          className={`navigation__link 
         ${location.pathname === '/movies' && `navigation__link_active`}
         ${location.pathname === '/' && `navigation__link_main`}
         `}
-          >
-            Фильмы
-          </Link>
-          <Link
-            to='/saved-movies'
-            className={`navigation__link 
+        >
+          Фильмы
+        </Link>
+        <Link
+          to='/saved-movies'
+          className={`navigation__link 
         ${location.pathname === '/saved-movies' && `navigation__link_active`}
         ${location.pathname === '/' && `navigation__link_main`}
         `}
-          >
-            Сохранённые фильмы
-          </Link>
-        </div>
-        <button className='navigation__profile' onClick={handleProfileClick}>
-          Аккаунт
-        </button>
-      </nav>
-    </>
+        >
+          Сохранённые фильмы
+        </Link>
+      </div>
+      <button className='navigation__profile' onClick={handleProfileClick}>
+        Аккаунт
+      </button>
+    </nav>
   );
 }
 export default Navigation;

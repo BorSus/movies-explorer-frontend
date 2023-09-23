@@ -1,20 +1,45 @@
+import React from 'react';
 import icon from '../../images/icon-search.svg';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
-function SearchForm({ handleSearchClick }) {
+function SearchForm({
+  handleSearchClick,
+  handleFilterCheckboxClick,
+  isShortFilm,
+  handleChangeInput,
+  searchInput,
+  isLoading
+}) {
   function onSearchClick(e) {
     e.preventDefault();
     handleSearchClick();
   }
+
   return (
     <section className='search-form'>
       <form className='search-form__search-bar'>
-        <input type='text' className='search-form__input' placeholder='Фильм'></input>
-        <button className='search-form__button' type='submit' onClick={onSearchClick || null}>
+        <input
+          type='text'
+          className='search-form__input'
+          placeholder='Фильм'
+          value={searchInput}
+          onChange={handleChangeInput}
+          disabled={isLoading}
+        ></input>
+        <button
+          className='search-form__button'
+          type='submit'
+          disabled={isLoading}
+          onClick={onSearchClick}
+        >
           <img src={icon} alt='иконка поиска' className='search-form__button-icon' />
         </button>
       </form>
-      <FilterCheckbox label='Короткометражки' />
+      <FilterCheckbox
+        label='Короткометражки'
+        handleFilterCheckboxClick={handleFilterCheckboxClick}
+        isShortFilm={isShortFilm}
+      />
     </section>
   );
 }

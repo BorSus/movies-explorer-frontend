@@ -4,7 +4,6 @@
   margin: 0px;
   padding: 0px;
 }
-
 .valid-input__title {
   margin: 0px;
   padding: 0px;
@@ -40,6 +39,9 @@
 .valid-input__input_error {
   color: #ee3465;
 }
+.valid-input__input_error:focus {
+  outline: 1px solid #ee3465;
+}
 .valid-input__error {
   font-size: 10px;
   font-weight: 400;
@@ -47,4 +49,5 @@
   letter-spacing: 0em;
   text-align: left;
   color: #ee3465;
+  min-height: 12px;
 }

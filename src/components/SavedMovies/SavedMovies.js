@@ -1,14 +1,74 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import { testCards } from '../../utils/constants.js';
+import { filterMovies } from '../../utils/FilterMovies.js';
+import CustomError from '../../utils/CustomError.js';
+function SavedMovies({ savedMovies, updateSavedMovies }) {
+  // переменная состояния запроса к серверу
+  const [isLoading, setIsLoading] = useState(false);
+  //  переменная состояния значения поисковой строки
+  const [searchInput, setSearchInput] = useState('');
+  const [isShortFilm, setIsShortFilm] = useState(false);
+  const [infoMessage, setInfoMessage] = useState('');
+  // фильмы для отрисовки карточек
+  const [moviesCards, setMoviesCards] = useState(savedMovies);
 
-function SavedMovies({ handleSearchClick }) {
-  const savedCards = testCards.filter(cardItem => cardItem.saved === true);
+  async function handleSearchClick() {
+    try {
+      if (!searchInput) {
+        setMoviesCards(savedMovies);
+      }
+      setIsLoading(true);
+      const filteredMovies = filterMovies(savedMovies, searchInput, isShortFilm);
+      if (filteredMovies.length === 0) {
+        throw new CustomError('Ничего не найдено');
+      }
+      setInfoMessage('');
+      setMoviesCards(filteredMovies);
+    } catch (error) {
+      if (error.message === 'Ничего не найдено') {
+        setInfoMessage(error.message);
+        return;
+      }
+      setInfoMessage(
+        'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз'
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  }
+  function handleChangeInput(e) {
+    setSearchInput(e.target.value);
+  }
+
+  function handleFilterCheckboxClick() {
+    setIsShortFilm(!isShortFilm);
+  }
+
+  useEffect(() => {
+    handleSearchClick();
+    //eslint-disable-next-line
+  }, [isShortFilm, savedMovies]);
+
   return (
     <section className='saved-movies'>
-      <SearchForm handleSearchClick={handleSearchClick} />
-      <MoviesCardList cards={savedCards} />
+      <SearchForm
+        handleSearchClick={handleSearchClick}
+        isShortFilm={isShortFilm}
+        handleFilterCheckboxClick={handleFilterCheckboxClick}
+        handleChangeInput={handleChangeInput}
+        searchInput={searchInput}
+        isLoading={isLoading}
+      />
+      {infoMessage ? (
+        <p className='movies__not-found'>{infoMessage}</p>
+      ) : (
+        <MoviesCardList
+          moviesCards={moviesCards}
+          savedMovies={savedMovies}
+          updateSavedMovies={updateSavedMovies}
+        />
+      )}
     </section>
   );
 }
