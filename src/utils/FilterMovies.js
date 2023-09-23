@@ -1,3 +1,4 @@
+import { shortFilmDuration } from './constants.js';
 const filterMovies = (allMovies, searchString, isShortFilm) => {
   let filtеredMovies = [];
 
@@ -5,7 +6,7 @@ const filterMovies = (allMovies, searchString, isShortFilm) => {
     isShortFilm
       ? (movie.nameRU.toLowerCase().trim().includes(searchString.toLowerCase()) ||
           movie.nameRU.toLowerCase().trim().includes(searchString.toLowerCase())) &&
-        movie.duration <= 40
+        movie.duration <= shortFilmDuration
       : movie.nameRU.toLowerCase().trim().includes(searchString.toLowerCase()) ||
         movie.nameRU.toLowerCase().trim().includes(searchString.toLowerCase())
   );

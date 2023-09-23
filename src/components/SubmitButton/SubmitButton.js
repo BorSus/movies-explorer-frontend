@@ -1,5 +1,5 @@
 import React from 'react';
-function SubmitButton({ textButton, textError, isValidForm, type, handleSubmitForm }) {
+function SubmitButton({ textButton, textError, isValidForm, type, handleSubmitForm, isLoading }) {
   function onSubmit(e) {
     e.preventDefault();
     handleSubmitForm();
@@ -11,6 +11,7 @@ function SubmitButton({ textButton, textError, isValidForm, type, handleSubmitFo
         className={`submit__button 
         ${isValidForm ? `submit__button_type_${type}` : `submit__button_type_disactive`}`}
         type='submit'
+        disabled={!isValidForm || isLoading}
         onClick={onSubmit}
       >
         {textButton}

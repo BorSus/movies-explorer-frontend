@@ -4,6 +4,8 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { filterMovies } from '../../utils/FilterMovies.js';
 import CustomError from '../../utils/CustomError.js';
 function SavedMovies({ savedMovies, updateSavedMovies }) {
+  // переменная состояния запроса к серверу
+  const [isLoading, setIsLoading] = useState(false);
   //  переменная состояния значения поисковой строки
   const [searchInput, setSearchInput] = useState('');
   const [isShortFilm, setIsShortFilm] = useState(false);
@@ -16,6 +18,7 @@ function SavedMovies({ savedMovies, updateSavedMovies }) {
       if (!searchInput) {
         setMoviesCards(savedMovies);
       }
+      setIsLoading(true);
       const filteredMovies = filterMovies(savedMovies, searchInput, isShortFilm);
       if (filteredMovies.length === 0) {
         throw new CustomError('Ничего не найдено');
@@ -31,6 +34,7 @@ function SavedMovies({ savedMovies, updateSavedMovies }) {
         'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз'
       );
     } finally {
+      setIsLoading(false);
     }
   }
   function handleChangeInput(e) {
@@ -54,6 +58,7 @@ function SavedMovies({ savedMovies, updateSavedMovies }) {
         handleFilterCheckboxClick={handleFilterCheckboxClick}
         handleChangeInput={handleChangeInput}
         searchInput={searchInput}
+        isLoading={isLoading}
       />
       {infoMessage ? (
         <p className='movies__not-found'>{infoMessage}</p>

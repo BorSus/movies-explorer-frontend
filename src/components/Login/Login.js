@@ -6,6 +6,8 @@ import { errors } from '../../utils/constants.js';
 import { api } from '../../utils/MainApi.js';
 
 function Login({ checkToken }) {
+  // переменная состояния запроса к серверу
+  const [isLoading, setIsLoading] = useState(false);
   //  переменная состояния значения ValidInput
   const [valueInputs, setValueInputs] = useState({
     email: '',
@@ -45,13 +47,14 @@ function Login({ checkToken }) {
     setIsValidForm(Object.values(validInputs).every(item => item === true));
   }, [validInputs]);
 
-  //  Функция для submit формы EntrySection.
+  //  Функция для submit формы login
   async function handleSubmitForm() {
     try {
+      setIsLoading(true);
+      setTextError('Идет загрузка...');
       await api.signin(valueInputs);
       checkToken('/movies');
     } catch (error) {
-      setIsValidForm(false);
       if (error === 'Ошибка: 401') {
         setTextError(errors.loginBadPassword);
       } else if (error === 'Ошибка: 400') {
@@ -59,6 +62,7 @@ function Login({ checkToken }) {
       }
       console.error(`Ошибка при авторизации пользователя: ${error}`);
     } finally {
+      setIsLoading(false);
       console.info('Авторизация пользователя-завершено');
     }
   }
@@ -72,6 +76,7 @@ function Login({ checkToken }) {
         path='/signup'
         handleSubmitForm={handleSubmitForm}
         data={validInputs}
+        isValidForm={isValidForm}
       >
         <div className='login__inputs'>
           <ValidInput
@@ -84,6 +89,7 @@ function Login({ checkToken }) {
             value={valueInputs.email}
             error={errorInputs.email}
             isValid={validInputs.email}
+            isLoading={isLoading}
           />
           <ValidInput
             name='password'
@@ -96,6 +102,7 @@ function Login({ checkToken }) {
             value={valueInputs.password}
             error={errorInputs.password}
             isValid={validInputs.password}
+            isLoading={isLoading}
           />
         </div>
         <SubmitButton
@@ -104,6 +111,7 @@ function Login({ checkToken }) {
           textError={textError}
           isValidForm={isValidForm}
           handleSubmitForm={handleSubmitForm}
+          isLoading={isLoading}
         />
       </EntrySection>
     </main>

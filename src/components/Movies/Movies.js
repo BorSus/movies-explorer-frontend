@@ -3,6 +3,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 import CustomError from '../../utils/CustomError.js';
+import { widthScreenPoint, paramsCardsForWidth } from '../../utils/constants.js';
 import { apiMovies } from '../../utils/MoviesApi.js';
 import { filterMovies, saveLocalStorage } from '../../utils/FilterMovies.js';
 function Movies({ savedMovies, updateSavedMovies }) {
@@ -19,23 +20,23 @@ function Movies({ savedMovies, updateSavedMovies }) {
   const [searchInput, setSearchInput] = useState(
     JSON.parse(localStorage.getItem('searchString')) || ''
   );
-  // индикатор прелоадера
+  // переменная состояния запроса к серверу
   const [isLoading, setIsLoading] = useState(false);
   // информационное сообщение
   const [infoMessage, setInfoMessage] = useState(null);
   // сколько карточек и по сколько загружать
-  const [countShowCards, setСountShowCards] = useState(0);
-  const [moreShowCards, setMoreShowCards] = useState(0);
-
+  const [paramsRenderCards, setParamsRenderCards] = useState({});
+  const [amountRenderCards, setAmountRenderCards] = useState(0);
   // Обработчик изменения значения поиска
   function handleChangeInput(e) {
     setSearchInput(e.target.value);
   }
+  //
   async function handleSearchClick() {
     try {
       let filteredMovies = [];
       if (!searchInput) {
-        throw new CustomError('no search word');
+        throw new CustomError('Введите ключевое слово для поиска фильмов');
       }
       setIsLoading(true);
       setInfoMessage('Идет поиск');
@@ -50,11 +51,12 @@ function Movies({ savedMovies, updateSavedMovies }) {
         throw new CustomError('Ничего не найдено');
       }
       setInfoMessage('');
+      setAmountRenderCards(paramsRenderCards.initial);
       setMoviesCards(filteredMovies);
       saveLocalStorage(filteredMovies, searchInput, isShortFilm);
     } catch (error) {
-      if (error.message === 'no search word') {
-        setInfoMessage('Введите ключевое слово для поиска фильмов');
+      if (error.message === 'Введите ключевое слово для поиска фильмов') {
+        setInfoMessage(error.message);
         return;
       }
       if (error.message === 'Ничего не найдено') {
@@ -71,27 +73,28 @@ function Movies({ savedMovies, updateSavedMovies }) {
   function handleFilterCheckboxClick() {
     setIsShortFilm(!isShortFilm);
   }
+
   //Функция проверки размера ширины
   // контрольные точки настроены на FireFox
   useEffect(() => {
     function handleResize() {
       const width = window.innerWidth;
-      if (width >= 1280) {
-        setСountShowCards(16);
-        setMoreShowCards(4);
-      } else if (width >= 990 && width <= 1279) {
-        setСountShowCards(12);
-        setMoreShowCards(3);
-      } else if (width >= 768 && width <= 989) {
-        setСountShowCards(8);
-        setMoreShowCards(2);
-      } else if (width <= 767) {
-        setСountShowCards(5);
-        setMoreShowCards(2);
+      if (width >= widthScreenPoint.desctop) {
+        setAmountRenderCards(paramsCardsForWidth.desctop.initial);
+        setParamsRenderCards(paramsCardsForWidth.desctop);
+      } else if (width >= widthScreenPoint.tablet && width < widthScreenPoint.desctop) {
+        setAmountRenderCards(paramsCardsForWidth.notebook.initial);
+        setParamsRenderCards(paramsCardsForWidth.notebook);
+      } else if (width >= widthScreenPoint.mobile && width < widthScreenPoint.tablet) {
+        setAmountRenderCards(paramsCardsForWidth.tablet.initial);
+        setParamsRenderCards(paramsCardsForWidth.tablet);
+      } else if (width < widthScreenPoint.mobile) {
+        setAmountRenderCards(paramsCardsForWidth.mobile.initial);
+        setParamsRenderCards(paramsCardsForWidth.mobile);
       }
     }
-    window.addEventListener('resize', handleResize);
     handleResize();
+    window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
@@ -105,9 +108,8 @@ function Movies({ savedMovies, updateSavedMovies }) {
   }, [isShortFilm]);
 
   function handleMoreClick() {
-    setСountShowCards(countShowCards + moreShowCards);
+    setAmountRenderCards(amountRenderCards + paramsRenderCards.count);
   }
-
   return (
     <main className='movies'>
       <SearchForm
@@ -116,20 +118,21 @@ function Movies({ savedMovies, updateSavedMovies }) {
         handleFilterCheckboxClick={handleFilterCheckboxClick}
         handleChangeInput={handleChangeInput}
         searchInput={searchInput}
+        isLoading={isLoading}
       />
       {infoMessage ? (
         <p className='movies__not-found'>{infoMessage}</p>
       ) : (
         <MoviesCardList
           moviesCards={moviesCards}
-          showCards={countShowCards}
+          showCards={amountRenderCards}
           savedMovies={savedMovies}
           updateSavedMovies={updateSavedMovies}
         />
       )}
 
       {isLoading && <Preloader />}
-      {moviesCards.length > countShowCards && (
+      {moviesCards.length > amountRenderCards && !infoMessage && (
         <button className='movies__button' onClick={handleMoreClick}>
           Ещё
         </button>

@@ -71,7 +71,6 @@ function App() {
       {(wrapRoutes || location.pathname === '/profile') && (
         <Header isLoggedIn={isLoggedIn} handleMobileMenuClick={handleMobileMenuClick} />
       )}
-
       <Routes>
         <Route path='/' element={<Main />} />
         <Route
@@ -100,8 +99,32 @@ function App() {
             <ProtectedRoute isLoggedIn={isLoggedIn} element={<Profile checkToken={checkToken} />} />
           }
         />
-        <Route path='/signin' element={<Login checkToken={checkToken} />} />
-        <Route path='/signup' element={<Register checkToken={checkToken} />} />
+        <Route
+          path='/signin'
+          element={
+            isLoggedIn ? (
+              <PageNotFound
+                code='403'
+                info='Доступ запрещен, пожалуйста выйдете из аккаунта, для повторной авторизации'
+              />
+            ) : (
+              <Login checkToken={checkToken} />
+            )
+          }
+        />
+        <Route
+          path='/signup'
+          element={
+            isLoggedIn ? (
+              <PageNotFound
+                code='403'
+                info='Доступ запрещен, пожалуйста выйдете из аккаунта, если хотите зарегистрировать новый аккаунт'
+              />
+            ) : (
+              <Register checkToken={checkToken} />
+            )
+          }
+        />
         <Route path='*' element={<PageNotFound code='404' info='Страница не найдена' />} />
       </Routes>
       {wrapRoutes && <Footer />}

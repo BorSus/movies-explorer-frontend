@@ -10,7 +10,8 @@ function EditeInput({
   minLength,
   maxLength,
   pattern,
-  handleChangeInput
+  handleChangeInput,
+  isLoading
 }) {
   return (
     <div className='edite-input'>
@@ -23,7 +24,7 @@ function EditeInput({
         maxLength={maxLength}
         pattern={pattern}
         value={value || ''}
-        disabled={!isActive}
+        disabled={!isActive || isLoading}
         required
         placeholder={placeholder}
         onChange={handleChangeInput}

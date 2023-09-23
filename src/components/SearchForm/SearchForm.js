@@ -7,7 +7,8 @@ function SearchForm({
   handleFilterCheckboxClick,
   isShortFilm,
   handleChangeInput,
-  searchInput
+  searchInput,
+  isLoading
 }) {
   function onSearchClick(e) {
     e.preventDefault();
@@ -23,8 +24,14 @@ function SearchForm({
           placeholder='Фильм'
           value={searchInput}
           onChange={handleChangeInput}
+          disabled={isLoading}
         ></input>
-        <button className='search-form__button' type='submit' onClick={onSearchClick || null}>
+        <button
+          className='search-form__button'
+          type='submit'
+          disabled={isLoading}
+          onClick={onSearchClick}
+        >
           <img src={icon} alt='иконка поиска' className='search-form__button-icon' />
         </button>
       </form>

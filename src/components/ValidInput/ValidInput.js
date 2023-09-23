@@ -10,7 +10,8 @@ function ValidInput({
   value,
   error,
   handleChangeInput,
-  pattern
+  pattern,
+  isLoading
 }) {
   // Обработчик изменения input
   return (
@@ -23,10 +24,11 @@ function ValidInput({
         minLength={minLength}
         maxLength={maxLength}
         pattern={pattern}
-        required
         placeholder={placeholder}
         value={value}
         onChange={handleChangeInput}
+        disabled={isLoading}
+        required
       />
       <span className='valid-input__error'>{error || ' '}</span>
     </div>

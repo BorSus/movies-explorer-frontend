@@ -6,6 +6,8 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import { errors } from '../../utils/constants.js';
 
 function Profile({ checkToken }) {
+  // переменная состояния запроса к серверу
+  const [isLoading, setIsLoading] = useState(false);
   //Подписка на контекст данные пользователя
   const [currentUser, setСurrentUser] = useState(useContext(CurrentUserContext));
   //  переменная состояния значения EditeInput
@@ -18,11 +20,6 @@ function Profile({ checkToken }) {
     name: true,
     email: true
   });
-  // //  переменная состояния значения ошибок ValidInput
-  // const [errorInputs, setErrorInputs] = useState({
-  //   email: '',
-  //   password: ''
-  // });
   //  переменная состояния  значение валидности формы
   const [isValidForm, setIsValidForm] = useState(false);
   // переменная состояния  значение ошибки с сервера
@@ -52,16 +49,16 @@ function Profile({ checkToken }) {
   function handleEditControlClick() {
     setIsEditeActive(true);
   }
+  //  Функция для submit формы Profile.
   async function handleSubmitForm() {
     try {
+      setIsLoading(true);
       setTextError('');
       const editUser = await api.patchUserMe(valueInputs);
-      setIsValidForm(false);
       setСurrentUser(editUser);
-      setIsEditeActive(false);
       alert('Данные пользователя изменены');
+      setIsEditeActive(false);
     } catch (error) {
-      setIsValidForm(false);
       if (error === 'Ошибка: 409') {
         setTextError(errors.profileConflictEmail);
       } else {
@@ -69,6 +66,7 @@ function Profile({ checkToken }) {
       }
       console.error(`Ошибка при регистрации нового пользователя: ${error}`);
     } finally {
+      setIsLoading(false);
       console.info('Регистрация нового пользователя-завершено');
     }
   }
@@ -95,6 +93,7 @@ function Profile({ checkToken }) {
             isActive={isEditeActive}
             placeholder='Введите имя'
             handleChangeInput={handleChangeInput}
+            isLoading={isLoading}
           />
           <p className='profile__line'></p>
           <EditeInput
@@ -106,6 +105,7 @@ function Profile({ checkToken }) {
             isActive={isEditeActive}
             placeholder='Введите e-mail'
             handleChangeInput={handleChangeInput}
+            isLoading={isLoading}
           />
         </div>
         {isEditeActive && (
@@ -115,6 +115,7 @@ function Profile({ checkToken }) {
             textError={textError}
             isValidForm={isValidForm}
             handleSubmitForm={handleSubmitForm}
+            isLoading={isLoading}
           />
         )}
         {!isEditeActive && (

@@ -5,6 +5,8 @@ import SubmitButton from '../SubmitButton/SubmitButton';
 import { errors } from '../../utils/constants.js';
 import { api } from '../../utils/MainApi.js';
 function Register({ checkToken }) {
+  // переменная состояния запроса к серверу
+  const [isLoading, setIsLoading] = useState(false);
   //  переменная состояния значения ValidInput
   const [valueInputs, setValueInputs] = useState({
     name: '',
@@ -51,15 +53,16 @@ function Register({ checkToken }) {
     setIsValidForm(Object.values(validInputs).every(item => item === true));
   }, [validInputs]);
 
-  //  Функция для submit формы EntrySection.
+  //  Функция для submit формы Register.
   async function handleSubmitForm() {
     try {
+      setIsLoading(true);
       setIsValidForm(false);
+      setTextError('Идет загрузка...');
       await api.signup(valueInputs);
       await api.signin({ email: valueInputs.email, password: valueInputs.password });
       checkToken('/movies');
     } catch (error) {
-      setIsValidForm(false);
       if (error === 'Ошибка: 409') {
         setTextError(errors.registerConflictEmail);
       } else {
@@ -67,8 +70,9 @@ function Register({ checkToken }) {
       }
       console.error(`Ошибка при регистрации нового пользователя: ${error}`);
     } finally {
-      console.info('Регистрация нового пользователя-завершено');
+      setIsLoading(false);
       setIsValidForm(true);
+      console.info('Регистрация нового пользователя-завершено');
     }
   }
 
@@ -95,6 +99,7 @@ function Register({ checkToken }) {
             value={valueInputs.name}
             error={errorInputs.name}
             isValid={validInputs.name}
+            isLoading={isLoading}
           />
           <ValidInput
             name='email'
@@ -106,6 +111,7 @@ function Register({ checkToken }) {
             value={valueInputs.email}
             error={errorInputs.email}
             isValid={validInputs.email}
+            isLoading={isLoading}
           />
           <ValidInput
             name='password'
@@ -118,6 +124,7 @@ function Register({ checkToken }) {
             value={valueInputs.password}
             error={errorInputs.password}
             isValid={validInputs.password}
+            isLoading={isLoading}
           />
         </div>
         <SubmitButton
@@ -126,6 +133,7 @@ function Register({ checkToken }) {
           textError={textError}
           isValidForm={isValidForm}
           handleSubmitForm={handleSubmitForm}
+          isLoading={isLoading}
         />
       </EntrySection>
     </main>
